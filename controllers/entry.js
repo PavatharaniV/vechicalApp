@@ -47,7 +47,7 @@ const exitEntry = async (req, res) => {
     try {
         const { id } = req.params;
         const entry = await Entry.findById(id);
-
+        
         if (!entry) {
             return res.status(404).send({ message: 'Entry not found' });
         }
@@ -65,7 +65,7 @@ const exitEntry = async (req, res) => {
 }
 
 const entryCount = async (req, res) => {
-    const { userId } = req.params; 
+    const { userId } = req.params;
 
     try {
         const totalEntries = await Entry.countDocuments({ user: userId });
@@ -78,10 +78,30 @@ const entryCount = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 }
- 
+
+const checkEntry = async (req, res) => {
+    const { vehicleNumber } = req.params;
+    console.log(vehicleNumber);
+
+    try {
+        const existingEntry = await Entry.findOne({ vehicleNumber, exitAt: null });
+        console.log(existingEntry);
+
+        if (existingEntry) {
+            return res.status(200).json(existingEntry);
+        } else {
+            return res.status(404).json({ message: 'Non-exited entry not found' });
+        }
+    } catch (error) {
+        console.error('Error checking entry:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
 module.exports = {
     createEntry,
     getEntriesByUserId,
     exitEntry,
-    entryCount
+    entryCount,
+    checkEntry
 };

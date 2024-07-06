@@ -4,7 +4,7 @@ const cors = require('cors')
 const { createUser, userSignIn, profile, signOut } = require('../controllers/user');
 const { isAuth } = require('../middleware/auth');
 const { validateUserSignIn, userValidation } = require('../middleware/validation/user');
-const { createEntry, getEntriesByUserId, exitEntry, entryCount } = require('../controllers/entry');
+const { createEntry, getEntriesByUserId, exitEntry, entryCount, checkEntry } = require('../controllers/entry');
 
 router.use(cors());
 
@@ -16,6 +16,6 @@ router.post('/create-entry',createEntry);
 router.get('/get-entries/:userId',getEntriesByUserId);
 router.patch('/exit-entry/:id',exitEntry);
 router.get('/getCount/:userId',entryCount);
-
+router.get('/check-entry/:vehicleNumber',checkEntry);
 
 module.exports = router;
