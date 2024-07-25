@@ -2,7 +2,7 @@ const Entry = require('../models/entry');
 const User = require('../models/user');
 
 const createEntry = async (req, res) => {
-    const { vehicleNumber, userId } = req.body; // Assuming userId is passed from the request body
+    const { vehicleNumber, userId } = req.body; 
 
     try {
         const user = await User.findById(userId);
